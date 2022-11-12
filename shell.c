@@ -1,37 +1,45 @@
-#include <stdio.h>
-#include <string.h>
+#include "main.h"
 
-/**
- * wait for user to write a command and 
- * print the command in the next line
- * so when user presses enter thats the eof
- */
 
 int main(){
 
     char command[100];
-    
-    /*int val = strcmp(command,"exit"); this wont work*/
+    char *argVec[] = {"ls",NULL};
+    char *envVec[] = {NULL};
 
-/*this works perfect dont know if best option*/
     prompt:
-    printf("#cisfun$ ");
+    printf("Chimdi'sSystem-$ ");
     while(scanf("%s",command)==1){
         scanf("%[^\n]",command);
+        if(!strcmp(command,"ls")){
+            /*pid_t parent = getpid();*/
+            pid_t pid = fork();
+
+            if (pid == -1)
+            {
+                perror("cant fork");
+            } 
+            else if (pid > 0)
+            {
+            int status;
+            waitpid(pid, &status, 0);
+            }
+            else 
+            {
+            execve("/usr/bin/ls",argVec,envVec);;
+    /*_exit(EXIT_FAILURE);   exec never returns*/
+            }
+        }
+        else{
         printf("%s\n",command);
+        }
         goto prompt;
     }
+
+
+
+
     return 0;
 
-/*potentiat figure out looping fgets*/
-    /**prompt
-     * printf("#cisfun$ ");
-     * while(!strcmp(command,"exit")){
-     *     fgets(command,100,stdin);
-     *    printf("%s\n",command);
-     *     goto prompt;
-     * }
-     * return 0;
-     */
     
 }

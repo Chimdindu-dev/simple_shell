@@ -1,4 +1,12 @@
-#include <stdio.h>
+#ifndef MAIN_H
+#define MAIN_H
 
-/*how to include /bin/ into header file c*/
-int printpid(void);
+
+#include <sys/wait.h>
+#include "./inside/bin.h"
+#include <stdio.h>
+#include <string.h>
+
+void printpid(void);
+
+#endif
