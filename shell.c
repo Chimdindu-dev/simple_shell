@@ -6,8 +6,8 @@ int main(){
     char *command;
     int byteread;
     size_t size = 100;
-    char *argVec[] = {"ls",NULL};
-    char *envVec[] = {NULL};
+    char *argVec[2];
+    /*char *envVec[] = {NULL};*/
     /*char *token[10];*/
     /*char delimiters[] = " ;";*/
     /*int i = 0;*/
@@ -18,7 +18,8 @@ int main(){
 
     byteread = getline(&command,&size,stdin); /* if u want to pass dont use getline just use getdeli and pass newline*/
     command[strcspn(command, "\r\n")] = 0; /*get rid of last null in string*/
-
+    argVec[0] = command;
+    argVec[1] = NULL;
     /* i have my own strtok replace later */
     /* splits up the string */
     /**token[i] = strtok(command, delimiters);
@@ -43,7 +44,8 @@ int main(){
             }
             else 
             {
-            execve(command,argVec,envVec);
+            execvp(command,argVec);
+            /*execve(command,argVec,envVec);*/
             if(!strcmp(command,"\0")){
                 goto prompt;
             }else{
