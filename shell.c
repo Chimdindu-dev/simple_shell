@@ -43,21 +43,25 @@ int main(){
             waitpid(pid, &status, 0);
             }
             else 
-            {
-            execvp(command,argVec);
-            /*execve(command,argVec,envVec);*/
-            if(!strcmp(command,"\0")){
-                goto prompt;
-            }else{
-                printf("%s: command not found\n",command);
-            }
+            {   
+                execvp(command,argVec);
+                /*execve(command,argVec,envVec);*/
+                if(!strcmp(command,"\0")){
+                    goto prompt;
+                }else if(!strcmp(command,"exit")){
+
+                        exit(0); /*it works but i created i new process try to only for if command found    */       
+                }
+                else{
+
+                    printf("%s: command not found\n",command);
+                }
             }
     }else{
         goto prompt;
     }
 
     goto prompt;
-
 
     return 0;
 
