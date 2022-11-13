@@ -3,14 +3,33 @@
 
 int main(){
 
-    char command[100];
+    char *command;
+    int byteread;
+    size_t size = 100;
     char *argVec[] = {"ls",NULL};
     char *envVec[] = {NULL};
+    /*char *token[10];*/
+    /*char delimiters[] = " ;";*/
+    /*int i = 0;*/
 
+    command = (char*)malloc(size);
     prompt:
-    printf("Chimdi'sSystem-$ ");
-    while(scanf("%s",command)==1){
-        scanf("%[^\n]",command);
+    printf("Chimdi@ALXCLI-$ ");
+
+    byteread = getline(&command,&size,stdin); /* if u want to pass dont use getline just use getdeli and pass newline*/
+    command[strcspn(command, "\r\n")] = 0; /*get rid of last null in string*/
+
+    /* i have my own strtok replace later */
+    /* splits up the string */
+    /**token[i] = strtok(command, delimiters);
+     *for (i=1;i<9;i++){
+     *  printf("%s\n", token[i]);
+     *   token[i] = strtok(NULL, delimiters);
+     *}
+     */
+
+    
+    if(byteread != -1){
         if(!strcmp(command,"ls")){
             /*pid_t parent = getpid();*/
             pid_t pid = fork();
@@ -31,8 +50,10 @@ int main(){
             }
         }
         else{
-        printf("%s\n",command);
+        printf("%s: command not found\n",command);
         }
+        goto prompt;
+    }else{
         goto prompt;
     }
 
