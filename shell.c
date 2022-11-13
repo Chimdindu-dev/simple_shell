@@ -28,9 +28,7 @@ int main(){
      *}
      */
 
-    
     if(byteread != -1){
-        if(!strcmp(command,"ls")){
             /*pid_t parent = getpid();*/
             pid_t pid = fork();
 
@@ -45,19 +43,18 @@ int main(){
             }
             else 
             {
-            execve("/usr/bin/ls",argVec,envVec);;
-    /*_exit(EXIT_FAILURE);   exec never returns*/
+            execve(command,argVec,envVec);
+            if(!strcmp(command,"\0")){
+                goto prompt;
+            }else{
+                printf("%s: command not found\n",command);
             }
-        }
-        else{
-        printf("%s: command not found\n",command);
-        }
-        goto prompt;
+            }
     }else{
         goto prompt;
     }
 
-
+    goto prompt;
 
 
     return 0;
