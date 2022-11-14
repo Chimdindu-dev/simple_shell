@@ -6,13 +6,11 @@ int main(){
     char *command;
     int byteread;
     size_t size = 100;
-    char *argVec[2];
     char* argv[100]; 
-    /*char *envVec[] = {NULL};*/
+    char *argVec[2];
     char *token;
     char delimiters[] = " ;";
     int i = 0;
-    char filepath[100] = "/bin/";
 
     command = (char*)malloc(size);
     prompt:
@@ -22,11 +20,13 @@ int main(){
     command[strcspn(command, "\r\n")] = 0; /*get rid of last null in string*/
     /* i have my own strtok replace later */
     /* splits up the string */
+    argVec[0] = command;
+    argVec[1] = NULL;
 
     if (!strcmp(command,"exit")){
         exit(0);
-    }
-
+        }
+    
     token = strtok(command, delimiters);
     while(token!=NULL){
         argv[i]=token;
@@ -36,11 +36,10 @@ int main(){
     }
     argv[i]=NULL;
 
-    
-    strcat(filepath,command);
+
 
     if(byteread != -1){
-        if(access(command,F_OK)==0 ){
+        /*if(access(argv[0],F_OK)==0 ){*/
             /*pid_t parent = getpid();*/
             pid_t pid = fork();
 
@@ -55,14 +54,14 @@ int main(){
             }
             else 
             {   
-                execvp(command,argVec);
-                /*execve(command,argVec,envVec);*/
-             
-            }}
-            else{
-                printf("%s: command not found\n",command);
+                
+                execvp(argv[0],argVec);
+                printf("hi");
             }
-    }else{
+             
+            }
+            
+    else{
         goto prompt;
     }
 
