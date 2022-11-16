@@ -11,7 +11,6 @@ int main(){
     char *token;
     char delimiters[] = " ;";
     int i = 0;
-
     command = (char*)malloc(size);
     prompt:
     printf("Chimdi@ALXCLI-$ ");
