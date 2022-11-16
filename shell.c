@@ -55,7 +55,7 @@ int main(){
             {   
                 
                 execvp(argv[0],argVec);
-                printf("hi");
+    
             }
              
             }
