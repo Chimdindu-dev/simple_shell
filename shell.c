@@ -29,7 +29,7 @@ int main(){
     token = strtok(command, delimiters);
     while(token!=NULL){
         argv[i]=token;
-        printf("%s\n", argv[i]);
+        /*printf("%s\n", argv[i]);*/
         token = strtok(NULL, delimiters);
         i++;
     }
